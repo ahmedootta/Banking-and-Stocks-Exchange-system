@@ -1,0 +1,77 @@
+/* Global styles for better layout */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.main-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 250px;
+  text-align: center;
+}
+
+.main-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px); /* Lift effect */
+}
+
+.main-button:active {
+  background-color: #004085;
+  transform: translateY(1px); /* Active click effect */
+}
+
+.main-button:focus {
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  .home-container {
+    padding: 40px;
+  }
+
+  .title {
+    font-size: 48px;
+    margin-bottom: 50px;
+  }
+
+  .button-container {
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  .main-button {
+    width: auto;
+  }
+}

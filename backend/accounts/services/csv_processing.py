@@ -13,7 +13,7 @@ def process_csv(file):
             doc_name = file
         )
     except: 
-        return (f"Error saving document: This file uploaded before!")    
+        return (f"Error: This file uploaded before!")    
     
     file_data = file.read().decode('utf-8') # decode to a string
     reader = csv.DictReader(file_data.splitlines())
@@ -29,14 +29,10 @@ def process_csv(file):
                 name=name,
                 balance=balance
             )
-            skipped_rows += 1
+            saved_rows += 1
 
         except Exception as e:
             skipped_rows += 1   
 
 
-    return {
-        'Message': 'File processed',
-        'Rows_Saved': saved_rows,
-        'Rows_Failed': skipped_rows
-        }
+    return (f'Message: File processed, Rows_Saved: {saved_rows}, Rows_Failed: {skipped_rows}')

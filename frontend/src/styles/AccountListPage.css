@@ -1,0 +1,62 @@
+/* AccountListPage.css */
+#container {
+  max-width: 100%;  /* Ensure it occupies full width */
+  margin-top: 120rem;
+  padding: 20px; /* To prevent overflow if the content is too wide */
+}
+
+h1 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.account-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.account-table th,
+.account-table td {
+  border: 1px solid #139feb92;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.account-table th {
+  background-color: #76c5f2;
+  color: #333;
+}
+
+.account-table td {
+  background-color: #fff;
+  word-wrap: break-word;  /* Ensure long content wraps */
+}
+
+.account-table td span#dollar {
+  color: rgb(2, 255, 2);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: #98d2f3;
+  transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+  background-color: #76c5f2;
+}
+
+.pagination span {
+  align-self: center;
+  margin: 0 10px;
+}
