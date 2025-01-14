@@ -25,5 +25,5 @@ This project is a web application for managing banking operations, such as uploa
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/banking-system.git
-cd banking-system
+git clone git@github.com:ahmedootta/Docspert-Health_Task.git
+cd Docspert-Health_Task
