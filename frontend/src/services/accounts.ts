@@ -4,7 +4,8 @@ import axios from 'axios';
 export interface Account {
   account_number: string;
   name: string;
-  balance: number; // Assuming balance is a string (for decimal values)
+  balance: number;
+  is_admin: boolean;
 }
 
 const API = axios.create({
@@ -14,8 +15,10 @@ const API = axios.create({
 // Fetch all accounts
 export const getAccounts = async (): Promise<Account[]> => {
     try {
-      const response = await API.get('/accounts/list_accounts');
+      const response = await API.get('/accounts/list_clients');
+      console.log(response.data.accounts)
       return response.data.accounts;
+   
 
     }catch (error) {
         console.error('Error fetching accounts:', error);

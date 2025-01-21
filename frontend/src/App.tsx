@@ -2,11 +2,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import HomePage from './pages/HomePage';
-import AccountListPage from './pages/AccountListPage'; // Page to list all accounts
-import UploadPage from './pages/UploadPage'; // Page to upload files
-import TransferPage from './pages/TransferPage'; // Page to send money
-import AccountInquiryPage from './pages/AccountInquiryPage'
+import HomePage from './accountPages/HomePage';
+import AccountListPage from './accountPages/AccountListPage'; // Page to list all accounts
+import UploadPage from './accountPages/UploadPage'; // Page to upload files
+import TransferPage from './accountPages/TransferPage'; // Page to send money
+import AccountInquiryPage from './accountPages/AccountInquiryPage'
 
 const App: React.FC = () => {
   return (

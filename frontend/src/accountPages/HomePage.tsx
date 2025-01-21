@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
       <h1>Welcome To Your-Bank System</h1>
       <div className="button-container">
         <Link to="/upload-file">
-          <button className="main-button">Upload File to the Bank Database</button>
+          <button className="main-button">Upload Clients to the Bank Database</button>
         </Link>
         <Link to="/accounts">
           <button className="main-button">List All Accounts</button>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { getAccounts } from '../services/api';
-import '../styles/AccountListPage.css';
+import React, { useEffect, useState } from "react";
+import { getAccounts } from "../services/accounts";
+import "../styles/AccountListPage.css";
 
 const AccountListPage: React.FC = () => {
   const [accounts, setAccounts] = useState<any[]>([]);
@@ -8,16 +8,19 @@ const AccountListPage: React.FC = () => {
   const [accountsPerPage] = useState(50); // Number of accounts per page set to 50
 
   useEffect(() => {
-    document.title = "All Accounts"; 
+    document.title = "All Accounts";
     getAccounts().then((response) => {
-      setAccounts(response);  // This should be the full list of accounts
+      setAccounts(response); // This should be the full list of accounts
     });
   }, []);
 
   // Logic to paginate accounts
   const indexOfLastAccount = currentPage * accountsPerPage;
   const indexOfFirstAccount = indexOfLastAccount - accountsPerPage;
-  const currentAccounts = accounts.slice(indexOfFirstAccount, indexOfLastAccount);
+  const currentAccounts = accounts.slice(
+    indexOfFirstAccount,
+    indexOfLastAccount
+  );
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -32,6 +35,7 @@ const AccountListPage: React.FC = () => {
             <th>Account Number</th>
             <th>Name</th>
             <th>Balance</th>
+            <th>Is-Admin</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +49,11 @@ const AccountListPage: React.FC = () => {
                 <td>{account.id}</td> {/* Displaying ID */}
                 <td>{account.account_number}</td>
                 <td>{account.name}</td>
-                <td><span id="dollar">$ </span>{account.balance}</td>
+                <td>
+                  <span id="dollar">$ </span>
+                  {account.balance}
+                </td>
+                <td>{account.is_admin ? "Yes" : "No"}</td>
               </tr>
             ))
           )}

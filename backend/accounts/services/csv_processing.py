@@ -1,6 +1,6 @@
 # service to extract data from csv file and store it in database
 import csv
-from accounts.models import Account, Document
+from accounts.models import Client, Document
 
 def process_csv(file):
     # rows saved into database
@@ -23,11 +23,13 @@ def process_csv(file):
             account_number = row['ID']
             name = row['Name']
             balance = float(row['Balance'])
+            is_admin = bool(row['Admin'])
 
-            Account.objects.create(
+            Client.objects.create(
                 account_number=account_number,
                 name=name,
-                balance=balance
+                balance=balance,
+                is_admin=is_admin
             )
             saved_rows += 1
 
@@ -35,4 +37,4 @@ def process_csv(file):
             skipped_rows += 1   
 
 
-    return (f'Message: File processed, Rows_Saved: {saved_rows}, Rows_Failed: {skipped_rows}')
+    return (f'Message: File processed, Clients_Saved: {saved_rows}, Clients_Failed: {skipped_rows}')

@@ -1,13 +1,18 @@
+import requests
+import finnhub
+from django.http import JsonResponse
+from django.views import View
 from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .services.csv_processing import process_csv
-from .services.transaction_validation import validate_transaction
-from .models import Account, Transaction
+from .services.transfer_validation import validate_transfer
+from .models import Client, Transfer
 from decimal import Decimal
+from django.db import transaction
 
-class UploadCSVView(APIView):
+class UploadClientsCSV(APIView):
     def post(self, request):
         uploaded_file = request.FILES.get('file')
         if not uploaded_file:
@@ -25,27 +30,29 @@ class UploadCSVView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class AccountListView(APIView):
+class ClientListView(APIView):
     def get(self, request):
-        accounts = Account.objects.all().values('id', 'account_number', 'name', 'balance')
-        return Response({"accounts": list(accounts)}, status=status.HTTP_200_OK)
+        # Logic to checking if logged_user is admin or not before display list of accounts
+        clients = Client.objects.all().values('id', 'account_number', 'name', 'balance', 'is_admin')
+        return Response({"accounts": list(clients)}, status=status.HTTP_200_OK)
 
 
-class AccountDetailView(APIView):
+class ClientDetailView(APIView):
     def get(self, request, account_number):
         # Fetch account by account_number
-        account = get_object_or_404(Account, account_number=account_number)
-        account_data = {
-            "id": account.id,
-            "account_number": account.account_number,
-            "name": account.name,
-            "balance": account.balance,
+        client = get_object_or_404(Client, account_number=account_number)
+        client_data = {
+            "id": client.id,
+            "account_number": client.account_number,
+            "name": client.name,
+            "balance": client.balance,
+            "is_admin": client.is_admin
         }
-        return Response(account_data, status=status.HTTP_200_OK)       
+        return Response(client_data, status=status.HTTP_200_OK)       
 
-from django.db import transaction
 
-class AmountTransaction(APIView):
+
+class AmountTransfer(APIView):
     def put(self, request):
         sender_account = request.data.get('from_account')
         receiver_account = request.data.get('to_account')
@@ -56,7 +63,7 @@ class AmountTransaction(APIView):
         except Exception as err:
             return Response({"error": f"Invalid amount: {str(err)}"}, status=status.HTTP_400_BAD_REQUEST)
             
-        result = validate_transaction(sender_account, receiver_account, amount)
+        result = validate_transfer(sender_account, receiver_account, amount)
 
         if result["status"] == "error":
             return Response({"error": result["message"]}, status=status.HTTP_400_BAD_REQUEST)
@@ -71,15 +78,15 @@ class AmountTransaction(APIView):
                 sender.save()
                 receiver.save()
 
-                Transaction.objects.create(
+                Transfer.objects.create(
                     from_account=sender, # pass entire instance if you make it as foreign key, Django will handle it for you
                     to_account=receiver,
                     amount=amount
                 )
             
             return Response({
-                "message": "Transaction successful!",
-                "transaction": {
+                "message": "Transfer successfully done!",
+                "transfer": {
                     "from_account": sender.account_number,
                     "to_account": receiver.account_number,
                     "amount": amount
@@ -88,5 +95,6 @@ class AmountTransaction(APIView):
 
 
         except Exception as err:
-            return Response({"error": f"Transaction failed: {str(err)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error": f"Transfer failed: {str(err)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 

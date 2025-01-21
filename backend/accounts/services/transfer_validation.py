@@ -1,9 +1,9 @@
-from accounts.models import Account
+from accounts.models import Client
 from django.shortcuts import get_object_or_404
 from decimal import Decimal
 
 # service to validate transaction
-def validate_transaction(sender_account, receiver_account, amount):
+def validate_transfer(sender_account, receiver_account, amount):
     try:
         sender_document = get_object_or_404(Account, account_number=sender_account)
         receiver_document = get_object_or_404(Account, account_number=receiver_account)

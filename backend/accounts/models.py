@@ -9,21 +9,23 @@ class Document(models.Model):
         return self.doc_name
         
 
-class Account(models.Model):
-    name = models.CharField(max_length=100)
+class Client(models.Model):
+    name = models.CharField(max_length=20)
     account_number = models.CharField(max_length=50, unique=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2)
+    password = models.CharField(max_length=30, null=True)
+    is_admin = models.BooleanField()
 
     def __str__(self):
         return f"{self.name} - {self.account_number}"
 
-    class meta:
-        ordering = ['name']    
+    # class meta:
+    #     ordering = ['name']    
 
 
-class Transaction(models.Model):
-    from_account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='sender')
-    to_account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='receiver')
+class Transfer(models.Model):
+    from_account = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='sender')
+    to_account = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='receiver')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True) # to make it added automatically
 
