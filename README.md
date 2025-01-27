@@ -1,7 +1,7 @@
 # Banking-and-Stocks-Exchange-system
 Assesment task 
 
-# Banking System Web Application
+# Banking System
 
 This project is a web application for managing banking operations, such as uploading CSV files, transferring funds, and viewing account details. It provides a simple and interactive interface for users to upload data, view accounts, and manage money transfers. The app is built using React for the frontend and a Django backend for handling business logic and API requests.
 
