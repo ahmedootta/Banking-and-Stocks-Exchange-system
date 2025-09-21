@@ -20,10 +20,3 @@ This project is a web application for managing banking operations, such as uploa
 - **Database**: Relational (assumed to be handled by Django ORM)
 - **Styling**: CSS (for a clean and modern UI)
 
-## Installation
-
-### Clone the Repository
-
-```bash
-git clone git@github.com:ahmedootta/Docspert-Health_Task.git
-cd Docspert-Health_Task
